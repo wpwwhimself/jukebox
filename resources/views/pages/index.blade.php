@@ -12,7 +12,7 @@
     @foreach ($albums as $album)
     <x-shipyard.app.card
         class="album-card interactive"
-        style="--album-color: {{ $album->color }};"
+        style="--album-color: {{ $album->color }}77;"
         inner-class="flex right middle"
         onclick="openAlbum({{ $album->id }})"
     >
@@ -38,7 +38,7 @@ function reuseModal() {
     loader.classList.remove("hidden");
     modal.classList.remove("hidden");
     card.classList.add("hidden");
-    card.classList.add("flex", "down");
+    card.classList.add("flex", "down", "middle");
 }
 
 function openAlbum(album_id) {

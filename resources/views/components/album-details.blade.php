@@ -7,10 +7,12 @@
     class="album"
 />
 
-<div class="album-meta flex down middle">
-    <h3 style="color: {{ $album->color }};">{{ $album->name }}</h3>
-    <small class="ghost">{{ $album->years }}</small>
-    @if ($album->description) <p>{{ $album->description }}</p> @endif
+<div class="album-meta">
+    <div class="flex down middle no-gap">
+        <h3 style="color: {{ $album->color }};">{{ $album->name }}</h3>
+        <small class="ghost">{{ $album->years }}</small>
+    </div>
+    @if ($album->description) <p>{!! $album->description !!}</p> @endif
 </div>
 
 <ol class="song-list">

@@ -14,3 +14,16 @@
         background-color: var(--album-color);
     }
 }
+
+.album-meta,
+.song-meta {
+    max-width: 300px;
+
+    & > p {
+        text-align: justify;
+    }
+}
+
+.song-list {
+    padding-left: 1em;
+}

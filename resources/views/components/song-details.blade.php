@@ -2,18 +2,20 @@
     "song",
 ])
 
-<div class="song-meta flex right middle">
-    <img src="{{ $song->album->image }}"
-        alt="{{ $song->album->name }}"
-        class="album small"
-    />
-    <div class="flex down no-gap">
-        <h3 style="color: {{ $song->album->color }};">{{ $song->name }}</h3>
-        <small class="ghost">{{ $song->released_at->format("d.m.Y") }}</small>
+<div class="song-meta">
+    <div class="flex right middle">
+        <img src="{{ $song->album->image }}"
+            alt="{{ $song->album->name }}"
+            class="album small"
+        />
+        <div class="flex down no-gap">
+            <h3 style="color: {{ $song->album->color }};">{{ $song->name }}</h3>
+            <small class="ghost">{{ $song->released_at?->format("d.m.Y") }}</small>
+        </div>
     </div>
-</div>
 
-@if ($song->description) <p>{{ $song->description }}</p> @endif
+    @if ($song->description) <p>{!! $song->description !!}</p> @endif
+</div>
 
 <div class="flex right spread and-cover">
     <x-shipyard.ui.button
