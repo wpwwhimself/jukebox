@@ -87,7 +87,7 @@ class Album extends Model implements ContractsAuditable
     public function displayPreTitle(): Attribute
     {
         return Attribute::make(
-            get: fn () => null,
+            get: fn () => "<img src='$this->image' alt='$this->name' class='album small' />",
         );
     }
 
