@@ -28,7 +28,7 @@ class ShipyardTheme
      */
     public const COLORS = [
         "primary" => "#ff3d3d",
-        "secondary" => "#ca0000",
+        "secondary" => "#880000",
         "tertiary" => "#0099ff",
     ];
     #endregion
