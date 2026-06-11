@@ -13,7 +13,7 @@
     <x-shipyard.app.card
         class="album-card interactive"
         style="--album-color: {{ $album->color }}77;"
-        inner-class="flex right middle"
+        inner-class="flex right middle nowrap"
         onclick="openAlbum({{ $album->id }})"
     >
         <img src="{{ $album->image }}"

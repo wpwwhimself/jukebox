@@ -3,7 +3,7 @@
 ])
 
 <div class="song-meta">
-    <div class="flex right middle">
+    <div class="flex right middle nowrap">
         <img src="{{ $song->album->image }}"
             alt="{{ $song->album->name }}"
             class="album small"
