@@ -18,6 +18,7 @@ return new class extends Migration
 
             $table->foreignId("album_id")->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->integer("order");
+            $table->string("file")->nullable();
             $table->text("description")->nullable();
             $table->string("project_name")->nullable();
             $table->date("released_at")->nullable();

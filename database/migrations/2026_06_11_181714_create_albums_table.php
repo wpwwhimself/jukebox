@@ -18,6 +18,7 @@ return new class extends Migration
 
             $table->string("image")->nullable();
             $table->string("color")->nullable();
+            $table->boolean("is_normal")->default(true);
             $table->text("description")->nullable();
             $table->string("years")->nullable();
 

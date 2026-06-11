@@ -25,7 +25,7 @@ class Album extends Model implements ContractsAuditable
         // "checkOwnerUnless" => "", // for roles above, allow to see only one's own objects unless they're also other role
         "ordering" => 1,
         // "listScope" => "", // default scope to list items in model editor, empty defaults to forAdminList
-        // "defaultSort" => "", // default sort, as it appears in url
+        "defaultSort" => "-year", // default sort, as it appears in url
         // "defaultFltr" => "", // default filters //todo expand
     ];
 
@@ -34,6 +34,11 @@ class Album extends Model implements ContractsAuditable
     protected $fillable = [
         "name",
         "visible",
+        "image",
+        "color",
+        "is_normal",
+        "description",
+        "years",
     ];
 
     #region presentation
@@ -75,9 +80,7 @@ class Album extends Model implements ContractsAuditable
     public function displaySubtitle(): Attribute
     {
         return Attribute::make(
-            get: fn () => view("components.shipyard.app.model.badges", [
-                "badges" => $this->badges,
-            ])->render(),
+            get: fn () => $this->years,
         );
     }
 
@@ -103,35 +106,43 @@ class Album extends Model implements ContractsAuditable
     use HasStandardFields;
 
     public const FIELDS = [
-        // "<column_name>" => [
-        //     "type" => "<input_type>",
-        //     "columnTypes" => [ // for JSON
-        //         "<label>" => "<input_type>",
-        //     ],
-        //     "selectData" => [ // for select
-        //         "options" => ["label" => "", "value" => ""],
-        //         "emptyOption" => "",
-        //     ],
-        //     "label" => "",
-        //     "hint" => "",
-        //     "icon" => "",
-        //     // "required" => true,
-        //     // "default" => ,
-        //     // "autofillFrom" => ["<route>", "<model_name>"],
-        //     // "characterLimit" => 999, // for text fields
-        //     // "role" => "",
-        //     // "allowNulls" => true, // for when null values should not be treated as disabling filter but actual values
-        // ],
+        "image" => [
+            "type" => "url-storage",
+            "label" => "Obraz",
+            "icon" => "image",
+        ],
+        "color" => [
+            "type" => "color",
+            "label" => "Kolor",
+            "icon" => "palette",
+        ],
+        "is_normal" => [
+            "type" => "checkbox",
+            "label" => "Normalny",
+            "icon" => "shape",
+            "hint" => "Grupuje albumy na stronie głównej.",
+        ],
+        "description" => [
+            "type" => "TEXT",
+            "label" => "Opis",
+            "icon" => "text",
+        ],
+        "years" => [
+            "type" => "text",
+            "label" => "Lata",
+            "icon" => "calendar",
+            "hint" => "W jakich latach powstawał album.",
+        ],
     ];
 
     public const CONNECTIONS = [
-        // "<name>" => [
-        //     "model" => ,
-        //     "mode" => "<one|many|many-reverse>",
-        //     // "field_name" => "",
-        //     // "field_label" => "",
-        //     // "readonly" => true,
-        // ],
+        "songs" => [
+            "model" => Song::class,
+            "mode" => "many-reverse",
+            // "field_name" => "",
+            // "field_label" => "",
+            // "readonly" => true,
+        ],
     ];
 
     public const ACTIONS = [
@@ -173,24 +184,29 @@ class Album extends Model implements ContractsAuditable
     #endregion
 
     public const SORTS = [
-        // "<name>" => [
-        //     "label" => "",
-        //     "compare-using" => "function|field",
-        //     "discr" => "<function_name|field_name>",
-        // ],
+        "year" => [
+            "label" => "Lata",
+            "compare-using" => "field",
+            "discr" => "years",
+        ],
     ];
 
     public const FILTERS = [
-        // "<name>" => [
-        //     "label" => "",
-        //     "icon" => "",
-        //     "compare-using" => "function|field",
-        //     "discr" => "<function_name|field_name>",
-        //     "type" => "<input type>",
-        //     "operator" => "regexp",
-        //     "selectData" => [
-        //     ],
-        // ],
+        "normal" => [
+            "label" => "Normalny",
+            "icon" => "shape",
+            "compare-using" => "field",
+            "discr" => "is_normal",
+            "type" => "select",
+            "operator" => "=",
+            "selectData" => [
+                "options" => [
+                    ["label" => "Tak", "value" => 1],
+                    ["label" => "Nie", "value" => 0],
+                ],
+                "emptyOption" => "Wszystkie",
+            ],
+        ],
     ];
 
     public const EXTRA_SECTIONS = [
@@ -205,6 +221,11 @@ class Album extends Model implements ContractsAuditable
 
     #region scopes
     use HasStandardScopes;
+
+    public function scopeVisible()
+    {
+        return $this->orderByDesc("years");
+    }
     #endregion
 
     #region attributes
@@ -266,6 +287,10 @@ class Album extends Model implements ContractsAuditable
     #endregion
 
     #region relations
+    public function songs()
+    {
+        return $this->hasMany(Song::class)->visible();
+    }
     #endregion
 
     #region helpers

@@ -34,6 +34,12 @@ class Song extends Model implements ContractsAuditable
     protected $fillable = [
         "name",
         "visible",
+        "album_id",
+        "file",
+        "order",
+        "description",
+        "project_name",
+        "released_at",
     ];
 
     #region presentation
@@ -42,7 +48,7 @@ class Song extends Model implements ContractsAuditable
      */
     public function __toString(): string
     {
-        return $this->name;
+        return "$this->name ($this->album)";
     }
 
     /**
@@ -51,7 +57,7 @@ class Song extends Model implements ContractsAuditable
     public function optionLabel(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->name,
+            get: fn () => "$this->album > $this->order: $this->name",
         );
     }
 
@@ -67,7 +73,7 @@ class Song extends Model implements ContractsAuditable
                 "attributes" => new ComponentAttributeBag([
                     "role" => "card-title",
                 ]),
-                "slot" => $this,
+                "slot" => $this->name,
             ])->render(),
         );
     }
@@ -75,9 +81,7 @@ class Song extends Model implements ContractsAuditable
     public function displaySubtitle(): Attribute
     {
         return Attribute::make(
-            get: fn () => view("components.shipyard.app.model.badges", [
-                "badges" => $this->badges,
-            ])->render(),
+            get: fn () => null,
         );
     }
 
@@ -103,35 +107,50 @@ class Song extends Model implements ContractsAuditable
     use HasStandardFields;
 
     public const FIELDS = [
-        // "<column_name>" => [
-        //     "type" => "<input_type>",
-        //     "columnTypes" => [ // for JSON
-        //         "<label>" => "<input_type>",
-        //     ],
-        //     "selectData" => [ // for select
-        //         "options" => ["label" => "", "value" => ""],
-        //         "emptyOption" => "",
-        //     ],
-        //     "label" => "",
-        //     "hint" => "",
-        //     "icon" => "",
-        //     // "required" => true,
-        //     // "default" => ,
-        //     // "autofillFrom" => ["<route>", "<model_name>"],
-        //     // "characterLimit" => 999, // for text fields
-        //     // "role" => "",
-        //     // "allowNulls" => true, // for when null values should not be treated as disabling filter but actual values
-        // ],
+        "name" => [
+            "type" => "text",
+            "label" => "Tytuł",
+            "icon" => "format-title",
+            "required" => true,
+        ],
+        "file" => [
+            "type" => "url-storage",
+            "label" => "Plik",
+            "icon" => "file-music",
+            "hint" => "Ścieżka do OGGa z utworem.",
+        ],
+        "order" => [
+            "type" => "number",
+            "label" => "Numer ścieżki w albumie",
+            "icon" => "format-list-numbered",
+            "required" => true,
+        ],
+        "description" => [
+            "type" => "TEXT",
+            "label" => "Opis",
+            "icon" => "text",
+        ],
+        "project_name" => [
+            "type" => "text",
+            "label" => "Projekt",
+            "icon" => "traffic-cone",
+            "hint" => "Jeśli utwór ma swój projekt (np. F2D Rath), to opisz tutaj.",
+        ],
+        "released_at" => [
+            "type" => "date",
+            "label" => "Data wydania",
+            "icon" => "calendar",
+        ],
     ];
 
     public const CONNECTIONS = [
-        // "<name>" => [
-        //     "model" => ,
-        //     "mode" => "<one|many|many-reverse>",
-        //     // "field_name" => "",
-        //     // "field_label" => "",
-        //     // "readonly" => true,
-        // ],
+        "album" => [
+            "model" => Album::class,
+            "mode" => "one",
+            // "field_name" => "",
+            // "field_label" => "",
+            // "readonly" => true,
+        ],
     ];
 
     public const ACTIONS = [
@@ -173,24 +192,29 @@ class Song extends Model implements ContractsAuditable
     #endregion
 
     public const SORTS = [
-        // "<name>" => [
-        //     "label" => "",
-        //     "compare-using" => "function|field",
-        //     "discr" => "<function_name|field_name>",
-        // ],
+        "title" => [
+            "label" => "Tytuł",
+            "compare-using" => "field",
+            "discr" => "name",
+        ],
     ];
 
     public const FILTERS = [
-        // "<name>" => [
-        //     "label" => "",
-        //     "icon" => "",
-        //     "compare-using" => "function|field",
-        //     "discr" => "<function_name|field_name>",
-        //     "type" => "<input type>",
-        //     "operator" => "regexp",
-        //     "selectData" => [
-        //     ],
-        // ],
+        "album" => [
+            "label" => "Album",
+            "icon" => "disc",
+            "compare-using" => "field",
+            "discr" => "album_id",
+            "type" => "select",
+            "operator" => "=",
+            "selectData" => [
+                "optionsFromScope" => [
+                    Album::class,
+                    "forConnection",
+                ],
+                "emptyOption" => "Wszystkie",
+            ],
+        ],
     ];
 
     public const EXTRA_SECTIONS = [
@@ -211,7 +235,7 @@ class Song extends Model implements ContractsAuditable
     protected function casts(): array
     {
         return [
-            //
+            "released_at" => "datetime:d.m.Y"
         ];
     }
 
@@ -266,6 +290,10 @@ class Song extends Model implements ContractsAuditable
     #endregion
 
     #region relations
+    public function album()
+    {
+        return $this->belongsTo(Album::class);
+    }
     #endregion
 
     #region helpers

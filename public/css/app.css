@@ -1,0 +1,16 @@
+.album {
+    --size: 200px;
+
+    width: var(--size);
+    height: var(--size);
+
+    &.small {
+        --size: 3em;
+    }
+}
+
+.album-card {
+    &:hover {
+        background-color: var(--album-color);
+    }
+}
