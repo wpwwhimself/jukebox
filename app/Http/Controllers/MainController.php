@@ -39,4 +39,19 @@ class MainController extends Controller
             "html" => view("components.song-details", compact("song"))->render(),
         ]);
     }
+
+    public function getSongForPlayer(int $id)
+    {
+        $song = Song::with("album")->findOrFail($id);
+
+        return response()->json([
+            "id" => $song->id,
+            "title" => $song->name,
+            "album" => $song->album->name,
+            "album_cover" => $song->album->image,
+            "color" => $song->album->color,
+            "file" => $song->file,
+            "next_id" => $song->album->songs->firstWhere("order", ">", $song->order)?->id,
+        ]);
+    }
 }

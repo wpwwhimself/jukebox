@@ -24,6 +24,30 @@
     }
 }
 
+#player {
+    position: fixed;
+    bottom: 1em;
+    left: 50%;
+    transform: translate(-50%, 5em);
+    z-index: 1001;
+    border-color: currentColor;
+    opacity: 0;
+    width: max-content;
+
+    &.visible {
+        transform: translate(-50%, 0);
+        opacity: 1;
+    }
+
+    & .progress-bar {
+        color: var(--fg);
+    }
+
+    & .song-meta {
+        min-width: 100px;
+    }
+}
+
 .song-list {
     padding-left: 1em;
 }

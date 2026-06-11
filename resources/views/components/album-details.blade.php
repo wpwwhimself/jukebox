@@ -15,6 +15,14 @@
     @if ($album->description) <p>{!! $album->description !!}</p> @endif
 </div>
 
+<x-shipyard.ui.button
+    icon="play"
+    label="Odtwórz album"
+    class="primary"
+    action="none"
+    onclick="armPlayer({{ $album->songs->first()->id }});"
+/>
+
 <ol class="song-list">
     @foreach ($album->songs as $song)
     <li value="{{ $song->order }}"

@@ -9,4 +9,5 @@ Route::controller(MainController::class)->group(function () {
     Route::get("/", "index");
     Route::get("/album-data/{id}", "getAlbumData");
     Route::get("/song-data/{id}", "getSongData");
+    Route::get("/play/{id}", "getSongForPlayer");
 });

@@ -17,6 +17,14 @@
     @if ($song->description) <p>{!! $song->description !!}</p> @endif
 </div>
 
+<x-shipyard.ui.button
+    icon="play"
+    label="Odtwórz"
+    class="primary"
+    action="none"
+    onclick="armPlayer({{ $song->id }});"
+/>
+
 <div class="flex right spread and-cover">
     <x-shipyard.ui.button
         icon="chevron-left"
