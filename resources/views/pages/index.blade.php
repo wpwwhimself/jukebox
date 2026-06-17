@@ -24,6 +24,11 @@
             <h3>{{ $album->name }}</h3>
             <small class="ghost">{{ $album->years }}</small>
         </div>
+        <x-shipyard.stats.counter
+            :rank="$album->songs->count()"
+            style="lines"
+            label="Liczba utworów"
+        />
 
     </x-shipyard.app.card>
     @endforeach
