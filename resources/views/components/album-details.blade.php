@@ -9,7 +9,7 @@
 
 <div class="album-meta">
     <div class="flex down middle no-gap">
-        <h3 style="color: {{ $album->color }};">{{ $album->name }}</h3>
+        <h3>{{ $album->name }}</h3>
         <small class="ghost">{{ $album->years }}</small>
     </div>
     @if ($album->description) <p>{!! $album->description !!}</p> @endif
@@ -23,6 +23,7 @@
     onclick="armPlayer({{ $album->songs->first()->id }});"
 />
 
+<h4>Lista utworów:</h4>
 <ol class="song-list">
     @foreach ($album->songs as $song)
     <li value="{{ $song->order }}"
