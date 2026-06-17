@@ -24,6 +24,12 @@
     }
 }
 
+.about-logo {
+    width: 100px;
+    float: left;
+    margin: 0 1em 1em 0;
+}
+
 #player {
     position: fixed;
     bottom: 1em;
