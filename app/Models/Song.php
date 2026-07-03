@@ -25,7 +25,7 @@ class Song extends Model implements ContractsAuditable
         // "checkOwnerUnless" => "", // for roles above, allow to see only one's own objects unless they're also other role
         "ordering" => 2,
         // "listScope" => "", // default scope to list items in model editor, empty defaults to forAdminList
-        // "defaultSort" => "", // default sort, as it appears in url
+        "defaultSort" => "title", // default sort, as it appears in url
         // "defaultFltr" => "", // default filters //todo expand
     ];
 
@@ -200,6 +200,14 @@ class Song extends Model implements ContractsAuditable
     ];
 
     public const FILTERS = [
+        "title" => [
+            "label" => "Tytuł",
+            "compare-using" => "function",
+            "discr" => "name",
+            "type" => "text",
+            "operator" => "~*",
+            "icon" => "text",
+        ],
         "album" => [
             "label" => "Album",
             "icon" => "disc",
