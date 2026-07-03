@@ -104,6 +104,7 @@ function armPlayer(song_id) {
             player.querySelector(`.played-song-title`).textContent = data.title;
             player.querySelector(`.played-song-album`).textContent = data.album;
             player.querySelector(`.album`).src = data.album_cover;
+            player.querySelector(`.album`).onclick = () => openSong(data.id);
             player.style.color = data.color;
             audio.src = data.file;
 
@@ -189,9 +190,14 @@ function next() {
             action="none"
             onclick="stop()"
         />
-        <img src="" alt="Odtwarzany album"
-            class="album small interactive halo"
+        <x-shipyard.ui.button
+            icon="play-pause"
+            class="play-btn primary"
+            action="none"
             onclick="playOrPause()"
+        />
+        <img src="" alt="Odtwarzany utwór"
+            class="album small interactive halo"
         >
         <div class="song-meta flex down no-gap">
             <strong class="played-song-title">—</strong>
