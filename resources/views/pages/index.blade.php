@@ -6,7 +6,7 @@
 <x-shipyard.app.section
     :title="$normality ? 'Albumy' : 'Pozostałe albumy'"
     :icon="model_icon('albums')"
-    inner-class="grid but-mobile-down"
+    inner-class="grid but-mobile-down stagger-contents"
     inner-style="--col-count: 3;"
 >
     @foreach ($albums as $album)
