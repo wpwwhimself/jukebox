@@ -66,7 +66,7 @@ class Album extends Model implements ContractsAuditable
     public function displayTitle(): Attribute
     {
         return Attribute::make(
-            get: fn () => view("components.shipyard.app.h", [
+            get: fn () => view("shipyard::components.app.h", [
                 "lvl" => 3,
                 "icon" => $this->icon ?? self::META["icon"],
                 "attributes" => new ComponentAttributeBag([
@@ -94,7 +94,7 @@ class Album extends Model implements ContractsAuditable
     public function displayMiddlePart(): Attribute
     {
         return Attribute::make(
-            get: fn () => view("components.shipyard.app.model.connections-preview", [
+            get: fn () => view("shipyard::components.app.model.connections-preview", [
                 "connections" => self::getConnections(),
                 "model" => $this,
             ])->render(),
@@ -263,7 +263,7 @@ class Album extends Model implements ContractsAuditable
     //? override add button on model list
     // public static function modelAddButton(): string
     // {
-    //     return view("components.shipyard.ui.button", [
+    //     return view("shipyard::components.ui.button", [
     //         "icon" => "plus",
     //         "label" => "Dodaj",
     //         "action" => route(...),
@@ -277,7 +277,7 @@ class Album extends Model implements ContractsAuditable
     // public function modelEditButton(): Attribute
     // {
     //     return Attribute::make(
-    //         get: fn () => view("components.shipyard.ui.button", [
+    //         get: fn () => view("shipyard::components.ui.button", [
     //             "icon" => "pencil",
     //             "label" => "Edytuj",
     //             "action" => route(...),
