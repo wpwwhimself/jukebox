@@ -3,14 +3,14 @@
 @section("content")
 
 @foreach ($albumGroups as $normality => $albums)
-<x-shipyard.app.section
+<x-shipyard::app.section
     :title="$normality ? 'Albumy' : 'Pozostałe albumy'"
     :icon="model_icon('albums')"
     inner-class="grid but-mobile-down stagger-contents"
     inner-style="--col-count: 3;"
 >
     @foreach ($albums as $album)
-    <x-shipyard.app.card
+    <x-shipyard::app.card
         class="album-card interactive"
         style="--album-color: {{ $album->color }}77;"
         inner-class="flex right middle nowrap"
@@ -24,15 +24,15 @@
             <h3>{{ $album->name }}</h3>
             <small class="ghost">{{ $album->years }}</small>
         </div>
-        <x-shipyard.stats.counter
+        <x-shipyard::stats.counter
             :rank="$album->songs->count()"
             style="lines"
             label="Liczba utworów"
         />
 
-    </x-shipyard.app.card>
+    </x-shipyard::app.card>
     @endforeach
-</x-shipyard.app.section>
+</x-shipyard::app.section>
 @endforeach
 
 @endsection
@@ -184,13 +184,13 @@ function next() {
 @section ("appends")
 <div id="player" class="card bordered animatable">
     <div class="flex right middle nowrap">
-        <x-shipyard.ui.button
+        <x-shipyard::ui.button
             icon="stop"
             class="stop-btn primary"
             action="none"
             onclick="stop()"
         />
-        <x-shipyard.ui.button
+        <x-shipyard::ui.button
             icon="play-pause"
             class="play-btn primary"
             action="none"
@@ -202,12 +202,12 @@ function next() {
         <div class="song-meta flex down no-gap">
             <strong class="played-song-title">—</strong>
             <span class="played-song-album ghost">—</span>
-            <x-shipyard.app.loader horizontal />
-            <x-shipyard.app.progress-bar progress="0">
+            <x-shipyard::app.loader horizontal />
+            <x-shipyard::app.progress-bar progress="0">
                 <span class="time">0:00</span>
-            </x-shipyard.app.progress-bar>
+            </x-shipyard::app.progress-bar>
         </div>
-        <x-shipyard.ui.button
+        <x-shipyard::ui.button
             icon="skip-next"
             class="next-btn primary"
             action="none"

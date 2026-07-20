@@ -15,7 +15,7 @@
     @if ($album->description) <p>{!! $album->description !!}</p> @endif
 </div>
 
-<x-shipyard.ui.button
+<x-shipyard::ui.button
     icon="play"
     label="Odtwórz album"
     class="primary"
@@ -36,7 +36,7 @@
 </ol>
 
 <div class="flex right spread and-cover">
-    <x-shipyard.ui.button
+    <x-shipyard::ui.button
         icon="close"
         label="Zamknij"
         class="tertiary"

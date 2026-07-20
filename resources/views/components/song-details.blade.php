@@ -17,7 +17,7 @@
     @if ($song->description) <p>{!! $song->description !!}</p> @endif
 </div>
 
-<x-shipyard.ui.button
+<x-shipyard::ui.button
     icon="play"
     label="Odtwórz"
     class="primary"
@@ -26,14 +26,14 @@
 />
 
 <div class="flex right spread and-cover">
-    <x-shipyard.ui.button
+    <x-shipyard::ui.button
         icon="chevron-left"
         label="Wróć"
         class="tertiary"
         action="none"
         onclick="openAlbum({{ $song->album_id }})"
     />
-    <x-shipyard.ui.button
+    <x-shipyard::ui.button
         icon="close"
         label="Zamknij"
         class="tertiary"
